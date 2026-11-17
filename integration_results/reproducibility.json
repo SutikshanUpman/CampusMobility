@@ -6,32 +6,47 @@
     "frozen_thresholds_identical": true,
     "validation_prediction_files_identical": true,
     "test_comparison_sha256": [
-      "bc9d91018c1e96a9832731cfd2907fc3b568d07297d83a04775fb67938a49b6d",
-      "bc9d91018c1e96a9832731cfd2907fc3b568d07297d83a04775fb67938a49b6d"
+      "f34e166a3be7a624b84b1548c3bfd9d4b1088a083df8faa418c7fec3d812c469",
+      "f34e166a3be7a624b84b1548c3bfd9d4b1088a083df8faa418c7fec3d812c469"
     ],
     "validation_thresholds_sha256": [
-      "7a6411def3ba5225bc2aa1be57e904370c29e769d3bf0d2469de26607e98215a",
-      "7a6411def3ba5225bc2aa1be57e904370c29e769d3bf0d2469de26607e98215a"
+      "0e115f9d0f354b613be7db0a881b0e1d733b4d0acb808f59970616fc820f7eed",
+      "0e115f9d0f354b613be7db0a881b0e1d733b4d0acb808f59970616fc820f7eed"
     ],
     "max_abs_difference_test_metrics": 0.0,
     "all_match": true
   },
-  "frozen_thresholds_run1": {},
-  "frozen_thresholds_run2": {},
+  "frozen_thresholds_run1": {
+    "pretrained": 0.6,
+    "scratch_10": 0.99,
+    "scratch_25": 0.99,
+    "scratch_50": 0.5,
+    "finetuned_10": 0.55,
+    "finetuned_25": 0.55,
+    "finetuned_50": 0.5
+  },
+  "frozen_thresholds_run2": {
+    "pretrained": 0.6,
+    "scratch_10": 0.99,
+    "scratch_25": 0.99,
+    "scratch_50": 0.5,
+    "finetuned_10": 0.55,
+    "finetuned_25": 0.55,
+    "finetuned_50": 0.5
+  },
   "approaches_evaluated": [
     "reactive",
-    "movement_rule"
+    "movement_rule",
+    "pretrained",
+    "scratch_10",
+    "scratch_25",
+    "scratch_50",
+    "finetuned_10",
+    "finetuned_25",
+    "finetuned_50"
   ],
-  "approaches_pending": {
-    "pretrained": "thresholds cannot be frozen: checkpoint missing: artifacts/pretrained.pt",
-    "scratch_10": "thresholds cannot be frozen: checkpoint missing: artifacts/scratch_10.pt",
-    "scratch_25": "thresholds cannot be frozen: checkpoint missing: artifacts/scratch_25.pt",
-    "scratch_50": "thresholds cannot be frozen: checkpoint missing: artifacts/scratch_50.pt",
-    "finetuned_10": "thresholds cannot be frozen: checkpoint missing: artifacts/finetuned_10.pt",
-    "finetuned_25": "thresholds cannot be frozen: checkpoint missing: artifacts/finetuned_25.pt",
-    "finetuned_50": "thresholds cannot be frozen: checkpoint missing: artifacts/finetuned_50.pt"
-  },
-  "scope_note": "Reproducibility was verified for every approach marked evaluated. Pending approaches were not evaluated in either run.",
+  "approaches_pending": {},
+  "scope_note": "Reproducibility verified for all nine approaches.",
   "seeds": {
     "integration_seed": 42,
     "note": "Evaluation is deterministic; the seed is applied to random/numpy/torch at the start of each run.",
@@ -45,22 +60,30 @@
     "model_training_seed_from_person1": 42
   },
   "environment": {
-    "python": "3.12.3",
-    "platform": "Linux-6.18.44-fc-v470-x86_64-with-glibc2.39",
-    "numpy": "2.5.4",
-    "pandas": "3.0.6",
-    "torch": null,
-    "torch_available": false
+    "python": "3.13.11",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "numpy": "2.4.4",
+    "pandas": "3.1.1",
+    "torch": "2.15.0+cpu",
+    "torch_available": true
   },
   "input_fingerprints": {
     "datasets": {
       "validation_csv_sha256": "5bbe19941dd7da388b092a0a3236e4366aeb0601388e5d095afe82c9d3fb1842",
       "test_csv_sha256": "10cc33f4ab78415813ef82c924c2b00dc6d3e1b7b1a8212af8af6f26cce38755"
     },
-    "validation_prediction_sha256": {},
+    "validation_prediction_sha256": {
+      "pretrained": "ac61832bbbd9fb1606a603d4333107452105c3e9a5c49cfb90dc21a1517779a3",
+      "scratch_10": "701de0ec3c6ddc0e9ae8960671bf38884cf1129285c92f00de414b4df4c8727a",
+      "scratch_25": "3aee3ad2c3209b3e9e70fcdc0cd5eccf617e066b09dcd7915104433f713cdb27",
+      "scratch_50": "90084b1b722afc945d6f4402e65a73b062f8a6e7cbd558b2ebcf96e1d9215b43",
+      "finetuned_10": "b617493472d190ce1fcb132c9d8c7eb6bb37f88926aa8fbbdfdf9e51e5052b6b",
+      "finetuned_25": "0ef8a9a88cbdc8888bbdebe44cf3e99ffd7af6c94e953264f4ad492b32abc21a",
+      "finetuned_50": "ebf14b6bc5739f233b8917ed82bcd5060b4fec9d413e74fb698dd9186d3da753"
+    },
     "source_notebooks": {
-      "train_model.ipynb": "575ed63c10533a5e3d82439d98495f1fb2b216c3269dd499f5180a9f7588bfc9",
-      "handover_simulator.ipynb": "825a607fd74699217a1efa6a4f85c86e3e909b13c6503f06fcba3d8e9ac96d91"
+      "train_model.ipynb": "134cc08c1eff764db9b563a9db127a835ae99c32fa1aecffccc44dfd621a3bc1",
+      "handover_simulator.ipynb": "965603209c160086fd8639c875aef40c63135b6b0461d35813e9a735f8a7270c"
     }
   }
 }

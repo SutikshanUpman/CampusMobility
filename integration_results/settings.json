@@ -72,19 +72,19 @@
   "datasets": {
     "validation": {
       "name": "morning_val",
-      "source": "RECONSTRUCTED in memory from Person 1's generator + seed (data file missing; nothing written to data/)",
+      "source": "file",
       "sha256": "5bbe19941dd7da388b092a0a3236e4366aeb0601388e5d095afe82c9d3fb1842",
       "n_trips": 30,
       "seed": 4
     },
     "test": {
       "name": "morning_test",
-      "source": "RECONSTRUCTED in memory from Person 1's generator + seed (data file missing; nothing written to data/)",
+      "source": "file",
       "sha256": "10cc33f4ab78415813ef82c924c2b00dc6d3e1b7b1a8212af8af6f26cce38755",
       "n_trips": 100,
       "seed": 5
     },
-    "data_dir_exists": false,
+    "data_dir_exists": true,
     "test_trips_sha256": "a2de928a9efc784f06551c568b28ea3df45115360965a8c09071fe54737414b7"
   },
   "fairness_controls": {
@@ -124,8 +124,16 @@
       "higher threshold"
     ],
     "frozen_before_test_data_was_loaded": true,
-    "frozen_thresholds": {},
-    "frozen_thresholds_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "frozen_thresholds": {
+      "pretrained": 0.6,
+      "scratch_10": 0.99,
+      "scratch_25": 0.99,
+      "scratch_50": 0.5,
+      "finetuned_10": 0.55,
+      "finetuned_25": 0.55,
+      "finetuned_50": 0.5
+    },
+    "frozen_thresholds_sha256": "b29cb46a6d62f38c2b536ccb2d1df950a7d49501c8176b4a5c1421f70f051dcc",
     "person3_default_threshold_not_used_for_models": 0.7,
     "baselines": "reactive and movement-rule have no confidence threshold"
   },
@@ -141,144 +149,137 @@
   "models": {
     "pretrained": {
       "checkpoint": "artifacts/pretrained.pt",
-      "checkpoint_exists": false,
-      "checkpoint_sha256": null,
+      "checkpoint_exists": true,
+      "checkpoint_sha256": "ea314b9924508531b7b1aa4a89df53f373cc7f78e2db27123759a2d89132507c",
       "predictions_csv": "artifacts/pretrained_predictions.csv",
-      "predictions_csv_exists": false,
-      "predictions_csv_sha256": null,
+      "predictions_csv_exists": true,
+      "predictions_csv_sha256": "a424520bd4b19a0a471abf484f56316025c89dcf44bff48f98a9937ce012ed01",
       "initialisation": "general campus trips",
       "adaptation_trips": null,
       "architecture": "nn.GRU(input=9, hidden=hidden_size, 1 layer, batch_first) -> nn.Linear(hidden_size, 4) -> softmax",
       "input_window_readings": 5,
       "horizon_s": 3,
       "features_per_reading": 9,
-      "hidden_size": null,
-      "n_parameters": null,
-      "note": "checkpoint not inspected (pending); train_model.ipynb default hidden_size=32"
+      "hidden_size": 32,
+      "n_parameters": 4260
     },
     "scratch_10": {
       "checkpoint": "artifacts/scratch_10.pt",
-      "checkpoint_exists": false,
-      "checkpoint_sha256": null,
+      "checkpoint_exists": true,
+      "checkpoint_sha256": "f155cd3535da789e63a3c32b3edea2aeb7a84deb0b3c4703885d7e79d48207f2",
       "predictions_csv": "artifacts/scratch_10_predictions.csv",
-      "predictions_csv_exists": false,
-      "predictions_csv_sha256": null,
+      "predictions_csv_exists": true,
+      "predictions_csv_sha256": "7a894905e1409a40a6233d1e6ffc9ded0e336516af3560017d19ce6cc582d1f7",
       "initialisation": "random init, morning_adapt trips",
       "adaptation_trips": 10,
       "architecture": "nn.GRU(input=9, hidden=hidden_size, 1 layer, batch_first) -> nn.Linear(hidden_size, 4) -> softmax",
       "input_window_readings": 5,
       "horizon_s": 3,
       "features_per_reading": 9,
-      "hidden_size": null,
-      "n_parameters": null,
-      "note": "checkpoint not inspected (pending); train_model.ipynb default hidden_size=32"
+      "hidden_size": 32,
+      "n_parameters": 4260
     },
     "scratch_25": {
       "checkpoint": "artifacts/scratch_25.pt",
-      "checkpoint_exists": false,
-      "checkpoint_sha256": null,
+      "checkpoint_exists": true,
+      "checkpoint_sha256": "dd6c8b2c050eb6193cd2134d152e4c2b9fcaa5c12871207f02c86ba744749008",
       "predictions_csv": "artifacts/scratch_25_predictions.csv",
-      "predictions_csv_exists": false,
-      "predictions_csv_sha256": null,
+      "predictions_csv_exists": true,
+      "predictions_csv_sha256": "3d8917d75e5152195c57b090f23a033a4f8a014ec34d04d14739f223282f222c",
       "initialisation": "random init, morning_adapt trips",
       "adaptation_trips": 25,
       "architecture": "nn.GRU(input=9, hidden=hidden_size, 1 layer, batch_first) -> nn.Linear(hidden_size, 4) -> softmax",
       "input_window_readings": 5,
       "horizon_s": 3,
       "features_per_reading": 9,
-      "hidden_size": null,
-      "n_parameters": null,
-      "note": "checkpoint not inspected (pending); train_model.ipynb default hidden_size=32"
+      "hidden_size": 32,
+      "n_parameters": 4260
     },
     "scratch_50": {
       "checkpoint": "artifacts/scratch_50.pt",
-      "checkpoint_exists": false,
-      "checkpoint_sha256": null,
+      "checkpoint_exists": true,
+      "checkpoint_sha256": "8b0bb214e87615469fc278225f2103f9df175a0c5c0eb01707b2f11a2c830c47",
       "predictions_csv": "artifacts/scratch_50_predictions.csv",
-      "predictions_csv_exists": false,
-      "predictions_csv_sha256": null,
+      "predictions_csv_exists": true,
+      "predictions_csv_sha256": "01cf2665dfb5f87179069175552ecbdd42fdd7016a233d8e5b53dc7add578fdf",
       "initialisation": "random init, morning_adapt trips",
       "adaptation_trips": 50,
       "architecture": "nn.GRU(input=9, hidden=hidden_size, 1 layer, batch_first) -> nn.Linear(hidden_size, 4) -> softmax",
       "input_window_readings": 5,
       "horizon_s": 3,
       "features_per_reading": 9,
-      "hidden_size": null,
-      "n_parameters": null,
-      "note": "checkpoint not inspected (pending); train_model.ipynb default hidden_size=32"
+      "hidden_size": 32,
+      "n_parameters": 4260
     },
     "finetuned_10": {
       "checkpoint": "artifacts/finetuned_10.pt",
-      "checkpoint_exists": false,
-      "checkpoint_sha256": null,
+      "checkpoint_exists": true,
+      "checkpoint_sha256": "dd1e48367135d3ae7b864f854776bf4a621ed93679abe8a212b86da5f311740b",
       "predictions_csv": "artifacts/finetuned_10_predictions.csv",
-      "predictions_csv_exists": false,
-      "predictions_csv_sha256": null,
+      "predictions_csv_exists": true,
+      "predictions_csv_sha256": "2da29f78dd9b661632dec3485c553ef9fdaa0d72acff0cfe5e6fe17bf638ad86",
       "initialisation": "pretrained weights, then morning_adapt trips",
       "adaptation_trips": 10,
       "architecture": "nn.GRU(input=9, hidden=hidden_size, 1 layer, batch_first) -> nn.Linear(hidden_size, 4) -> softmax",
       "input_window_readings": 5,
       "horizon_s": 3,
       "features_per_reading": 9,
-      "hidden_size": null,
-      "n_parameters": null,
-      "note": "checkpoint not inspected (pending); train_model.ipynb default hidden_size=32"
+      "hidden_size": 32,
+      "n_parameters": 4260
     },
     "finetuned_25": {
       "checkpoint": "artifacts/finetuned_25.pt",
-      "checkpoint_exists": false,
-      "checkpoint_sha256": null,
+      "checkpoint_exists": true,
+      "checkpoint_sha256": "f7d7026fddfb88c157230a96b5ab1c7f21f7665312888c279da39e8006e69714",
       "predictions_csv": "artifacts/finetuned_25_predictions.csv",
-      "predictions_csv_exists": false,
-      "predictions_csv_sha256": null,
+      "predictions_csv_exists": true,
+      "predictions_csv_sha256": "6371c2cb392eff5e94a2024bce21a82ff1cd2fe531558ade4d7522c352639d23",
       "initialisation": "pretrained weights, then morning_adapt trips",
       "adaptation_trips": 25,
       "architecture": "nn.GRU(input=9, hidden=hidden_size, 1 layer, batch_first) -> nn.Linear(hidden_size, 4) -> softmax",
       "input_window_readings": 5,
       "horizon_s": 3,
       "features_per_reading": 9,
-      "hidden_size": null,
-      "n_parameters": null,
-      "note": "checkpoint not inspected (pending); train_model.ipynb default hidden_size=32"
+      "hidden_size": 32,
+      "n_parameters": 4260
     },
     "finetuned_50": {
       "checkpoint": "artifacts/finetuned_50.pt",
-      "checkpoint_exists": false,
-      "checkpoint_sha256": null,
+      "checkpoint_exists": true,
+      "checkpoint_sha256": "cad02b0c8468cc75f05377d9e0efc6646f15a8afc55e5a478e8d0e5d82f394c3",
       "predictions_csv": "artifacts/finetuned_50_predictions.csv",
-      "predictions_csv_exists": false,
-      "predictions_csv_sha256": null,
+      "predictions_csv_exists": true,
+      "predictions_csv_sha256": "6f3df20a271ff628ef3e74eb9967d51fefc6d74e317e710467f899d2e29cb2e5",
       "initialisation": "pretrained weights, then morning_adapt trips",
       "adaptation_trips": 50,
       "architecture": "nn.GRU(input=9, hidden=hidden_size, 1 layer, batch_first) -> nn.Linear(hidden_size, 4) -> softmax",
       "input_window_readings": 5,
       "horizon_s": 3,
       "features_per_reading": 9,
-      "hidden_size": null,
-      "n_parameters": null,
-      "note": "checkpoint not inspected (pending); train_model.ipynb default hidden_size=32"
+      "hidden_size": 32,
+      "n_parameters": 4260
     }
   },
-  "pending": {
-    "pretrained": "checkpoint missing: artifacts/pretrained.pt",
-    "scratch_10": "checkpoint missing: artifacts/scratch_10.pt",
-    "scratch_25": "checkpoint missing: artifacts/scratch_25.pt",
-    "scratch_50": "checkpoint missing: artifacts/scratch_50.pt",
-    "finetuned_10": "checkpoint missing: artifacts/finetuned_10.pt",
-    "finetuned_25": "checkpoint missing: artifacts/finetuned_25.pt",
-    "finetuned_50": "checkpoint missing: artifacts/finetuned_50.pt"
+  "pending": {},
+  "checkpoint_vs_csv_max_abs_diff": {
+    "pretrained": 0.0,
+    "scratch_10": 0.0,
+    "scratch_25": 0.0,
+    "scratch_50": 0.0,
+    "finetuned_10": 0.0,
+    "finetuned_25": 0.0,
+    "finetuned_50": 0.0
   },
-  "checkpoint_vs_csv_max_abs_diff": {},
   "environment": {
-    "python": "3.12.3",
-    "platform": "Linux-6.18.44-fc-v470-x86_64-with-glibc2.39",
-    "numpy": "2.5.4",
-    "pandas": "3.0.6",
-    "torch": null,
-    "torch_available": false
+    "python": "3.13.11",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "numpy": "2.4.4",
+    "pandas": "3.1.1",
+    "torch": "2.15.0+cpu",
+    "torch_available": true
   },
   "source_notebook_sha256": {
-    "train_model.ipynb": "575ed63c10533a5e3d82439d98495f1fb2b216c3269dd499f5180a9f7588bfc9",
-    "handover_simulator.ipynb": "825a607fd74699217a1efa6a4f85c86e3e909b13c6503f06fcba3d8e9ac96d91"
+    "train_model.ipynb": "134cc08c1eff764db9b563a9db127a835ae99c32fa1aecffccc44dfd621a3bc1",
+    "handover_simulator.ipynb": "965603209c160086fd8639c875aef40c63135b6b0461d35813e9a735f8a7270c"
   }
 }
