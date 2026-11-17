@@ -1,0 +1,10 @@
+approach,display_name,family,adaptation_trips,status,status_detail,confidence_threshold,mean_handover_delay_s,p95_handover_delay_s,correct_early_preparation_rate_pct,unused_reservation_capacity_capacity_s,total_handovers,correct_reservations,wrong_reservations,expired_reservations,no_reservation_handovers,test_trips
+reactive,Reactive,baseline,,evaluated,,,2.0,2.0,0.0,0.0,176,0,0,0,176,100
+movement_rule,Movement rule,baseline,,evaluated,,,0.6477272727272727,2.0,75.0,790.0,176,132,2,158,42,100
+pretrained,Pre-trained GRU,pretrained,,PENDING,thresholds cannot be frozen: checkpoint missing: artifacts/pretrained.pt,,,,,,,,,,,100
+scratch_10,Scratch GRU (10 trips),scratch,10,PENDING,thresholds cannot be frozen: checkpoint missing: artifacts/scratch_10.pt,,,,,,,,,,,100
+scratch_25,Scratch GRU (25 trips),scratch,25,PENDING,thresholds cannot be frozen: checkpoint missing: artifacts/scratch_25.pt,,,,,,,,,,,100
+scratch_50,Scratch GRU (50 trips),scratch,50,PENDING,thresholds cannot be frozen: checkpoint missing: artifacts/scratch_50.pt,,,,,,,,,,,100
+finetuned_10,Fine-tuned GRU (10 trips),finetuned,10,PENDING,thresholds cannot be frozen: checkpoint missing: artifacts/finetuned_10.pt,,,,,,,,,,,100
+finetuned_25,Fine-tuned GRU (25 trips),finetuned,25,PENDING,thresholds cannot be frozen: checkpoint missing: artifacts/finetuned_25.pt,,,,,,,,,,,100
+finetuned_50,Fine-tuned GRU (50 trips),finetuned,50,PENDING,thresholds cannot be frozen: checkpoint missing: artifacts/finetuned_50.pt,,,,,,,,,,,100

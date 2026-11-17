@@ -1,0 +1,10 @@
+approach,status,detail,threshold,selected,mean_delay_s,p95_delay_s,correct_early_rate_pct,unused_capacity_s,handovers,correct_reservations,wrong_reservations,expired_reservations,no_reservation_handovers
+reactive,evaluated (no threshold),,,True,2.0,2.0,0.0,0.0,53,0,0,0,53
+movement_rule,evaluated (no threshold),,,True,0.6981132075471698,2.0,73.58490566037736,230.0,53,39,0,46,14
+pretrained,PENDING,checkpoint missing: artifacts/pretrained.pt,,False,,,,,,,,,
+scratch_10,PENDING,checkpoint missing: artifacts/scratch_10.pt,,False,,,,,,,,,
+scratch_25,PENDING,checkpoint missing: artifacts/scratch_25.pt,,False,,,,,,,,,
+scratch_50,PENDING,checkpoint missing: artifacts/scratch_50.pt,,False,,,,,,,,,
+finetuned_10,PENDING,checkpoint missing: artifacts/finetuned_10.pt,,False,,,,,,,,,
+finetuned_25,PENDING,checkpoint missing: artifacts/finetuned_25.pt,,False,,,,,,,,,
+finetuned_50,PENDING,checkpoint missing: artifacts/finetuned_50.pt,,False,,,,,,,,,

@@ -1,0 +1,66 @@
+{
+  "procedure": "run_full_pipeline executed twice from scratch (files re-read, checkpoints reloaded, simulator state rebuilt) with identical settings",
+  "results": {
+    "test_comparison_identical": true,
+    "validation_thresholds_identical": true,
+    "frozen_thresholds_identical": true,
+    "validation_prediction_files_identical": true,
+    "test_comparison_sha256": [
+      "bc9d91018c1e96a9832731cfd2907fc3b568d07297d83a04775fb67938a49b6d",
+      "bc9d91018c1e96a9832731cfd2907fc3b568d07297d83a04775fb67938a49b6d"
+    ],
+    "validation_thresholds_sha256": [
+      "7a6411def3ba5225bc2aa1be57e904370c29e769d3bf0d2469de26607e98215a",
+      "7a6411def3ba5225bc2aa1be57e904370c29e769d3bf0d2469de26607e98215a"
+    ],
+    "max_abs_difference_test_metrics": 0.0,
+    "all_match": true
+  },
+  "frozen_thresholds_run1": {},
+  "frozen_thresholds_run2": {},
+  "approaches_evaluated": [
+    "reactive",
+    "movement_rule"
+  ],
+  "approaches_pending": {
+    "pretrained": "thresholds cannot be frozen: checkpoint missing: artifacts/pretrained.pt",
+    "scratch_10": "thresholds cannot be frozen: checkpoint missing: artifacts/scratch_10.pt",
+    "scratch_25": "thresholds cannot be frozen: checkpoint missing: artifacts/scratch_25.pt",
+    "scratch_50": "thresholds cannot be frozen: checkpoint missing: artifacts/scratch_50.pt",
+    "finetuned_10": "thresholds cannot be frozen: checkpoint missing: artifacts/finetuned_10.pt",
+    "finetuned_25": "thresholds cannot be frozen: checkpoint missing: artifacts/finetuned_25.pt",
+    "finetuned_50": "thresholds cannot be frozen: checkpoint missing: artifacts/finetuned_50.pt"
+  },
+  "scope_note": "Reproducibility was verified for every approach marked evaluated. Pending approaches were not evaluated in either run.",
+  "seeds": {
+    "integration_seed": 42,
+    "note": "Evaluation is deterministic; the seed is applied to random/numpy/torch at the start of each run.",
+    "dataset_seeds_from_person1": {
+      "general_train": 1,
+      "general_val": 2,
+      "morning_adapt": 3,
+      "morning_val": 4,
+      "morning_test": 5
+    },
+    "model_training_seed_from_person1": 42
+  },
+  "environment": {
+    "python": "3.12.3",
+    "platform": "Linux-6.18.44-fc-v470-x86_64-with-glibc2.39",
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "torch": null,
+    "torch_available": false
+  },
+  "input_fingerprints": {
+    "datasets": {
+      "validation_csv_sha256": "5bbe19941dd7da388b092a0a3236e4366aeb0601388e5d095afe82c9d3fb1842",
+      "test_csv_sha256": "10cc33f4ab78415813ef82c924c2b00dc6d3e1b7b1a8212af8af6f26cce38755"
+    },
+    "validation_prediction_sha256": {},
+    "source_notebooks": {
+      "train_model.ipynb": "575ed63c10533a5e3d82439d98495f1fb2b216c3269dd499f5180a9f7588bfc9",
+      "handover_simulator.ipynb": "825a607fd74699217a1efa6a4f85c86e3e909b13c6503f06fcba3d8e9ac96d91"
+    }
+  }
+}

@@ -1,0 +1,284 @@
+{
+  "title": "Person 4 integration and evaluation",
+  "created_by": "main.ipynb",
+  "approaches": {
+    "reactive": {
+      "display_name": "Reactive",
+      "strategy_in_person3_code": "reactive",
+      "adaptation_trips": null
+    },
+    "movement_rule": {
+      "display_name": "Movement rule",
+      "strategy_in_person3_code": "movement",
+      "adaptation_trips": null
+    },
+    "pretrained": {
+      "display_name": "Pre-trained GRU",
+      "strategy_in_person3_code": "model",
+      "adaptation_trips": null
+    },
+    "scratch_10": {
+      "display_name": "Scratch GRU (10 trips)",
+      "strategy_in_person3_code": "model",
+      "adaptation_trips": 10
+    },
+    "scratch_25": {
+      "display_name": "Scratch GRU (25 trips)",
+      "strategy_in_person3_code": "model",
+      "adaptation_trips": 25
+    },
+    "scratch_50": {
+      "display_name": "Scratch GRU (50 trips)",
+      "strategy_in_person3_code": "model",
+      "adaptation_trips": 50
+    },
+    "finetuned_10": {
+      "display_name": "Fine-tuned GRU (10 trips)",
+      "strategy_in_person3_code": "model",
+      "adaptation_trips": 10
+    },
+    "finetuned_25": {
+      "display_name": "Fine-tuned GRU (25 trips)",
+      "strategy_in_person3_code": "model",
+      "adaptation_trips": 25
+    },
+    "finetuned_50": {
+      "display_name": "Fine-tuned GRU (50 trips)",
+      "strategy_in_person3_code": "model",
+      "adaptation_trips": 50
+    }
+  },
+  "seeds": {
+    "integration_seed": 42,
+    "note": "Evaluation is deterministic; the seed is applied to random/numpy/torch at the start of each run.",
+    "dataset_seeds_from_person1": {
+      "general_train": 1,
+      "general_val": 2,
+      "morning_adapt": 3,
+      "morning_val": 4,
+      "morning_test": 5
+    },
+    "model_training_seed_from_person1": 42
+  },
+  "person1_training_settings": {
+    "seed": 42,
+    "hidden_size": 32,
+    "pretrain_epochs": 20,
+    "adapt_epochs": 40,
+    "batch_size": 512,
+    "learning_rate": 0.001,
+    "patience": 8
+  },
+  "datasets": {
+    "validation": {
+      "name": "morning_val",
+      "source": "RECONSTRUCTED in memory from Person 1's generator + seed (data file missing; nothing written to data/)",
+      "sha256": "5bbe19941dd7da388b092a0a3236e4366aeb0601388e5d095afe82c9d3fb1842",
+      "n_trips": 30,
+      "seed": 4
+    },
+    "test": {
+      "name": "morning_test",
+      "source": "RECONSTRUCTED in memory from Person 1's generator + seed (data file missing; nothing written to data/)",
+      "sha256": "10cc33f4ab78415813ef82c924c2b00dc6d3e1b7b1a8212af8af6f26cce38755",
+      "n_trips": 100,
+      "seed": 5
+    },
+    "data_dir_exists": false,
+    "test_trips_sha256": "a2de928a9efc784f06551c568b28ea3df45115360965a8c09071fe54737414b7"
+  },
+  "fairness_controls": {
+    "identical_test_trips_for_all_approaches": true,
+    "user_start_time_s": 0,
+    "start_times_note": "every trip starts at t=0 on Person 3's shared simulation clock",
+    "cell_capacity_per_cell": 10,
+    "preparation_delay_s": 2.0,
+    "reservation_lifetime_s": 5.0,
+    "movement_projection_s": 3.0,
+    "simulator_state_reset_per_strategy": "fresh namespace + fresh DataFrame copy for every run_simulation call",
+    "handover_logic": "Person 3's run_simulation source executed unchanged from handover_simulator.ipynb",
+    "independent_handover_count_test_set": 176
+  },
+  "threshold_selection": {
+    "data_used": "morning_val ONLY",
+    "grid": [
+      0.3,
+      0.35,
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8,
+      0.85,
+      0.9,
+      0.95,
+      0.99
+    ],
+    "objective": "maximise correct early preparation rate",
+    "tie_breaks": [
+      "lower unused reservation capacity",
+      "higher threshold"
+    ],
+    "frozen_before_test_data_was_loaded": true,
+    "frozen_thresholds": {},
+    "frozen_thresholds_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "person3_default_threshold_not_used_for_models": 0.7,
+    "baselines": "reactive and movement-rule have no confidence threshold"
+  },
+  "metric_definitions": {
+    "mean_handover_delay_s": "mean of Person 3's per-handover remaining preparation delay",
+    "p95_handover_delay_s": "np.percentile(delays, 95), linear interpolation",
+    "correct_early_preparation_rate_pct": "100 * handovers with an active reservation at the correct target cell / handovers",
+    "unused_reservation_capacity_capacity_s": "capacity-seconds held by reservations that were never used (expired, or still pending at the end of the run), lifetime x count",
+    "wrong_reservations": "handovers where the user held a reservation for a different cell",
+    "expired_reservations": "reservations removed by expiry during the run (includes wrong ones)",
+    "no_reservation_handovers": "handovers - correct - wrong (derived)"
+  },
+  "models": {
+    "pretrained": {
+      "checkpoint": "artifacts/pretrained.pt",
+      "checkpoint_exists": false,
+      "checkpoint_sha256": null,
+      "predictions_csv": "artifacts/pretrained_predictions.csv",
+      "predictions_csv_exists": false,
+      "predictions_csv_sha256": null,
+      "initialisation": "general campus trips",
+      "adaptation_trips": null,
+      "architecture": "nn.GRU(input=9, hidden=hidden_size, 1 layer, batch_first) -> nn.Linear(hidden_size, 4) -> softmax",
+      "input_window_readings": 5,
+      "horizon_s": 3,
+      "features_per_reading": 9,
+      "hidden_size": null,
+      "n_parameters": null,
+      "note": "checkpoint not inspected (pending); train_model.ipynb default hidden_size=32"
+    },
+    "scratch_10": {
+      "checkpoint": "artifacts/scratch_10.pt",
+      "checkpoint_exists": false,
+      "checkpoint_sha256": null,
+      "predictions_csv": "artifacts/scratch_10_predictions.csv",
+      "predictions_csv_exists": false,
+      "predictions_csv_sha256": null,
+      "initialisation": "random init, morning_adapt trips",
+      "adaptation_trips": 10,
+      "architecture": "nn.GRU(input=9, hidden=hidden_size, 1 layer, batch_first) -> nn.Linear(hidden_size, 4) -> softmax",
+      "input_window_readings": 5,
+      "horizon_s": 3,
+      "features_per_reading": 9,
+      "hidden_size": null,
+      "n_parameters": null,
+      "note": "checkpoint not inspected (pending); train_model.ipynb default hidden_size=32"
+    },
+    "scratch_25": {
+      "checkpoint": "artifacts/scratch_25.pt",
+      "checkpoint_exists": false,
+      "checkpoint_sha256": null,
+      "predictions_csv": "artifacts/scratch_25_predictions.csv",
+      "predictions_csv_exists": false,
+      "predictions_csv_sha256": null,
+      "initialisation": "random init, morning_adapt trips",
+      "adaptation_trips": 25,
+      "architecture": "nn.GRU(input=9, hidden=hidden_size, 1 layer, batch_first) -> nn.Linear(hidden_size, 4) -> softmax",
+      "input_window_readings": 5,
+      "horizon_s": 3,
+      "features_per_reading": 9,
+      "hidden_size": null,
+      "n_parameters": null,
+      "note": "checkpoint not inspected (pending); train_model.ipynb default hidden_size=32"
+    },
+    "scratch_50": {
+      "checkpoint": "artifacts/scratch_50.pt",
+      "checkpoint_exists": false,
+      "checkpoint_sha256": null,
+      "predictions_csv": "artifacts/scratch_50_predictions.csv",
+      "predictions_csv_exists": false,
+      "predictions_csv_sha256": null,
+      "initialisation": "random init, morning_adapt trips",
+      "adaptation_trips": 50,
+      "architecture": "nn.GRU(input=9, hidden=hidden_size, 1 layer, batch_first) -> nn.Linear(hidden_size, 4) -> softmax",
+      "input_window_readings": 5,
+      "horizon_s": 3,
+      "features_per_reading": 9,
+      "hidden_size": null,
+      "n_parameters": null,
+      "note": "checkpoint not inspected (pending); train_model.ipynb default hidden_size=32"
+    },
+    "finetuned_10": {
+      "checkpoint": "artifacts/finetuned_10.pt",
+      "checkpoint_exists": false,
+      "checkpoint_sha256": null,
+      "predictions_csv": "artifacts/finetuned_10_predictions.csv",
+      "predictions_csv_exists": false,
+      "predictions_csv_sha256": null,
+      "initialisation": "pretrained weights, then morning_adapt trips",
+      "adaptation_trips": 10,
+      "architecture": "nn.GRU(input=9, hidden=hidden_size, 1 layer, batch_first) -> nn.Linear(hidden_size, 4) -> softmax",
+      "input_window_readings": 5,
+      "horizon_s": 3,
+      "features_per_reading": 9,
+      "hidden_size": null,
+      "n_parameters": null,
+      "note": "checkpoint not inspected (pending); train_model.ipynb default hidden_size=32"
+    },
+    "finetuned_25": {
+      "checkpoint": "artifacts/finetuned_25.pt",
+      "checkpoint_exists": false,
+      "checkpoint_sha256": null,
+      "predictions_csv": "artifacts/finetuned_25_predictions.csv",
+      "predictions_csv_exists": false,
+      "predictions_csv_sha256": null,
+      "initialisation": "pretrained weights, then morning_adapt trips",
+      "adaptation_trips": 25,
+      "architecture": "nn.GRU(input=9, hidden=hidden_size, 1 layer, batch_first) -> nn.Linear(hidden_size, 4) -> softmax",
+      "input_window_readings": 5,
+      "horizon_s": 3,
+      "features_per_reading": 9,
+      "hidden_size": null,
+      "n_parameters": null,
+      "note": "checkpoint not inspected (pending); train_model.ipynb default hidden_size=32"
+    },
+    "finetuned_50": {
+      "checkpoint": "artifacts/finetuned_50.pt",
+      "checkpoint_exists": false,
+      "checkpoint_sha256": null,
+      "predictions_csv": "artifacts/finetuned_50_predictions.csv",
+      "predictions_csv_exists": false,
+      "predictions_csv_sha256": null,
+      "initialisation": "pretrained weights, then morning_adapt trips",
+      "adaptation_trips": 50,
+      "architecture": "nn.GRU(input=9, hidden=hidden_size, 1 layer, batch_first) -> nn.Linear(hidden_size, 4) -> softmax",
+      "input_window_readings": 5,
+      "horizon_s": 3,
+      "features_per_reading": 9,
+      "hidden_size": null,
+      "n_parameters": null,
+      "note": "checkpoint not inspected (pending); train_model.ipynb default hidden_size=32"
+    }
+  },
+  "pending": {
+    "pretrained": "checkpoint missing: artifacts/pretrained.pt",
+    "scratch_10": "checkpoint missing: artifacts/scratch_10.pt",
+    "scratch_25": "checkpoint missing: artifacts/scratch_25.pt",
+    "scratch_50": "checkpoint missing: artifacts/scratch_50.pt",
+    "finetuned_10": "checkpoint missing: artifacts/finetuned_10.pt",
+    "finetuned_25": "checkpoint missing: artifacts/finetuned_25.pt",
+    "finetuned_50": "checkpoint missing: artifacts/finetuned_50.pt"
+  },
+  "checkpoint_vs_csv_max_abs_diff": {},
+  "environment": {
+    "python": "3.12.3",
+    "platform": "Linux-6.18.44-fc-v470-x86_64-with-glibc2.39",
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "torch": null,
+    "torch_available": false
+  },
+  "source_notebook_sha256": {
+    "train_model.ipynb": "575ed63c10533a5e3d82439d98495f1fb2b216c3269dd499f5180a9f7588bfc9",
+    "handover_simulator.ipynb": "825a607fd74699217a1efa6a4f85c86e3e909b13c6503f06fcba3d8e9ac96d91"
+  }
+}
